@@ -1,0 +1,15 @@
+{
+  "name": "bot-google",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scrape.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "email-extractor": "^0.2.9",
+    "google": "^1.4.0"
+  }
+}
