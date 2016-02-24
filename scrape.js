@@ -28,32 +28,34 @@ function orange () {
 // // str = str.replace(/\s+/g, '');
 // // console.log("File for save: ", str);
 // // fs.writeFile(str+'.txt', '');
-var tmp = ""
-var links = [];
+	var tmp = ""
+	var links = [];
+	var emailB = "";
+	request({
+		uri: "http://lemoteur.orange.fr/?module=orange&bhv=web_fr&kw=Agence%20de%20communication%20contact&profil=orange2",
+	}, function(error, response, body) {
+		var $ = cheerio.load(body);
 
-request({
-  uri: "http://lemoteur.orange.fr/?module=orange&bhv=web_fr&kw=Agence%20de%20communication%20contact&profil=orange2",
-}, function(error, response, body) {
-  var $ = cheerio.load(body);
-
-  $(".ellipsisLine").each(function() {
-    var link = $(this);
-    var text = link.text();
-    tmp = text;
-    tmp = tmp.replace(/(\r\t|\t|\r)/gm,"");
-    tmp = tmp.replace(/(\r\n|\n|\r)/gm,"");
-    links.push(tmp);
-  });
-  console.log(links);
-});
-for (var i = 0; i < links.length; i++) {
-    	console.log(links[i]);
-    	extractor(links[i], function (url, email){
-    		console.log("hi");
-    		console.log("url: ", url);
-    		console.log("email: ", email);
-    	});
-    }
+		$(".ellipsisLine").each(function() {
+			var link = $(this);
+			var text = link.text();
+			tmp = text;
+			tmp = tmp.replace(/(\r\t|\t|\r)/gm,"");
+			tmp = tmp.replace(/(\r\n|\n|\r)/gm,"");
+			tmp = "http://" + tmp;
+			links.push(tmp);
+		});
+		for (var i = 0; i < links.length; i++) {
+			console.log(links[i]);
+			extractor(links[i], function (url, email){
+				if (email !== emailB){
+					console.log("email: ", email);
+					emailB = email;
+				}
+			});
+		}
+		//console.log(links);
+	});
 }
 
 orange();
@@ -67,6 +69,7 @@ orange();
 // google(argv.k+' inurl:contact site:.fr', function (err, next, links){
 // 	if (err) console.error(err)
 // 	for (var i = 0; i < links.length; ++i) {
+// 		console.log("link: ", links[i].link);
 // 	  	extractor(links[i].link,function(url, email){
 // 	  		var match = email.match(/(gif|png|jpg|jpeg)$/);
 // 	  		if (email !== emailBis && match == null) {
