@@ -1,7 +1,6 @@
 var google = require('google');
-var wait = require('wait.for');
-var request = require("request");
-var cheerio = require("cheerio");
+var request = require('request');
+var cheerio = require('cheerio');
 var hma = require('hma-proxy-scraper');
 var extractor = require('email-extractor').Extractor;
 var fs = require('fs');
@@ -32,7 +31,7 @@ function orange () {
 	var links = [];
 	var emailB = "";
 	request({
-		uri: "http://lemoteur.orange.fr/?module=orange&bhv=web_fr&kw=Agence%20de%20communication%20contact&profil=orange2",
+		uri: "http://lemoteur.orange.fr/?module=lemoteur&logid=1792600001456325808580470&keap=64&kelogid=E3UUZUJlg2&outputparser=default&devicetype=desktop&bhvhera=web_fr&profil=lemoteur&bhv=web_fr&ap=20&kw=agence+de+communication+contact",
 	}, function(error, response, body) {
 		var $ = cheerio.load(body);
 
