@@ -1,8 +1,8 @@
 var google = require('google');
-var wait = require('wait.for');
+// var wait = require('wait.for');
 var request = require("request");
 var cheerio = require("cheerio");
-var hma = require('hma-proxy-scraper');
+// var hma = require('hma-proxy-scraper');
 var extractor = require('email-extractor').Extractor;
 var fs = require('fs');
 // Google Params //
@@ -22,7 +22,7 @@ var argv = require('minimist')(process.argv.slice(1));
 ///////////////////////////////////////////////////////
 // orange();
 
-function orange () {
+function orange (keyword) {
 // //console.log("Keyword in use: ", argv.k);
 // // var str = argv.k;
 // // str = str.replace(/\s+/g, '');
@@ -32,7 +32,7 @@ function orange () {
 	var links = [];
 	var emailB = "";
 	request({
-		uri: "http://lemoteur.orange.fr/?module=orange&bhv=web_fr&kw=Agence%20de%20communication%20contact&profil=orange2",
+		uri: "http://lemoteur.orange.fr/?module=orange&bhv=web_fr&kw=Agence%20de%20communication%20contact&profil=orange2&ap=2",
 	}, function(error, response, body) {
 		var $ = cheerio.load(body);
 
