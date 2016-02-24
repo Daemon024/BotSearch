@@ -22,7 +22,7 @@ var argv = require('minimist')(process.argv.slice(1));
 ///////////////////////////////////////////////////////
 // orange();
 
-function orange (keyword) {
+function orange (str) {
 // //console.log("Keyword in use: ", argv.k);
 // // var str = argv.k;
 // // str = str.replace(/\s+/g, '');
@@ -31,11 +31,15 @@ function orange (keyword) {
   var tmp = ""
   var links = [];
   var emailB = "";
-  request({
-    uri: "http://lemoteur.orange.fr/?module=orange&bhv=web_fr&kw=Agence%20de%20communication%20contact&profil=orange2&ap=2",
+  var ap = 1;
+  str = str.replace(/\s+/g, '%20');
+  console.log(str);
+     for (var i = 0; i < 49; i++) {
+      console.log(i);
+        request({
+    uri: "http://lemoteur.orange.fr/?module=lemoteur&bhv=web_fr&kw="+str+"&profil=orange2&ap="+i,
   }, function(error, response, body) {
     var $ = cheerio.load(body);
-
     $(".ellipsisLine").each(function() {
       var link = $(this);
       var text = link.text();
@@ -56,9 +60,11 @@ function orange (keyword) {
     }
     //console.log(links);
   });
+    };
+
 }
 
-orange();
+orange('Agence de communication Test');
 /////////////////////////////////////////////////////////
 
 // console.log("Keyword in use: ", argv.k);
@@ -84,7 +90,7 @@ orange();
 //    if (next) next()
 //  }
 // })
-(err) console.error(err)
+// (err) console.error(err)
 // 	for (var i = 0; i < links.length; ++i) {
 // 		console.log("link: ", links[i].link);
 // 	  	extractor(links[i].link,function(url, email){
