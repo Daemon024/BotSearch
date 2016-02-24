@@ -1,5 +1,4 @@
 var google = require('google');
-//var sleep = require('sleep');
 var wait = require('wait.for');
 var request = require("request");
 var cheerio = require("cheerio");
@@ -21,14 +20,17 @@ var argv = require('minimist')(process.argv.slice(1));
 // });
 // console.log(proxies);
 ///////////////////////////////////////////////////////
-orange();
+// orange();
 
 function orange () {
-//console.log("Keyword in use: ", argv.k);
-// var str = argv.k;
-// str = str.replace(/\s+/g, '');
-// console.log("File for save: ", str);
-// fs.writeFile(str+'.txt', '');
+// //console.log("Keyword in use: ", argv.k);
+// // var str = argv.k;
+// // str = str.replace(/\s+/g, '');
+// // console.log("File for save: ", str);
+// // fs.writeFile(str+'.txt', '');
+var tmp = ""
+var links = [];
+
 request({
   uri: "http://lemoteur.orange.fr/?module=orange&bhv=web_fr&kw=Agence%20de%20communication%20contact&profil=orange2",
 }, function(error, response, body) {
@@ -37,16 +39,26 @@ request({
   $(".ellipsisLine").each(function() {
     var link = $(this);
     var text = link.text();
-    var href = link.attr("href");
-
-	extractor(text,function(url,email){
-	    console.log(url,email);
-	});
+    tmp = text;
+    tmp = tmp.replace(/(\r\t|\t|\r)/gm,"");
+    tmp = tmp.replace(/(\r\n|\n|\r)/gm,"");
+    links.push(tmp);
   });
+  console.log(links);
 });
+for (var i = 0; i < links.length; i++) {
+    	console.log(links[i]);
+    	extractor(links[i], function (url, email){
+    		console.log("hi");
+    		console.log("url: ", url);
+    		console.log("email: ", email);
+    	});
+    }
 }
+
+orange();
 /////////////////////////////////////////////////////////
-// function google (argv) {
+
 // console.log("Keyword in use: ", argv.k);
 // var str = argv.k;
 // str = str.replace(/\s+/g, '');
@@ -58,7 +70,6 @@ request({
 // 	  	extractor(links[i].link,function(url, email){
 // 	  		var match = email.match(/(gif|png|jpg|jpeg)$/);
 // 	  		if (email !== emailBis && match == null) {
-
 // 			  	fs.appendFile(str+'.txt', email + "\n", function (err) {
 // 				});
 // 				emailBis = email;
@@ -66,22 +77,7 @@ request({
 // 		});
 // 	}
 // 	if (nextCounter < 5) {
-// 	    nextCounter += 1
-// 	    sleep.sleep(120);
-// 	    google.requestOptions = {
-// 		  proxy: 'http:'+proxies[1],
-// 		  timeout: 30000,
-// 		  jar: true,
-// 		  headers: {
-// 		    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-// 		    'Accept-Encoding': 'gzip, deflate',
-// 		    'Accept-Language': 'en;q=0.5',
-// 		    'Cache-Control': 'max-age=0',
-// 		    'Connection': 'keep-alive',
-// 		    'DNT': 1
-// 		  }
-// 		}
+//     nextCounter += 1
 // 		if (next) next()
 // 	}
 // })
-// }

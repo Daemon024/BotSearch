@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^0.20.0",
     "email-extractor": "^0.2.9",
     "google": "^1.4.0"
   }
