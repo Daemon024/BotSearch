@@ -9,9 +9,23 @@ var fs = require('fs');
 google.resultsPerPage = 100
 var nextCounter = 0
 var emailBis = "";
-var key = process.argv[2];
+var str = process.argv[2];
+var str2 = process.argv[3]
+var str3 = process.argv[4]
+var str4 = process.argv[5]
+if (str2 != null & str3 == null & str4 == null) {
+  str = str+str2;
+};
+if (str2 != null & str3 != null & str4 == null ) {
+  str = str+str2+str3;
+};
+if (str2 != null & str3 != null & str4 != null ) {
+  str = str+str2+str3+str4;
+};
 //
-free(key);
+str = str.replace(/\s+/g, '%20');
+console.log(str);
+free(str);
 function free (str) {
   console.log("Keyword in use: ", str);
   console.log("-----------");
