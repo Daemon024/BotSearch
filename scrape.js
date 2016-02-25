@@ -1,4 +1,5 @@
 var google = require('google');
+var neek = require('neek');
 // var wait = require('wait.for');
 var request = require('request');
 var cheerio = require('cheerio');
@@ -25,6 +26,7 @@ if (str2 != null & str3 != null & str4 != null ) {
 //
 str = str.replace(/\s+/g, '%20');
 console.log(str);
+
 free(str);
 function free (str) {
   console.log("Keyword in use: ", str);
@@ -34,12 +36,14 @@ function free (str) {
   console.log("-----------");
   file = file + '.txt';
   //
+  var readable = file+'.txt';
+  var writable = file+'.txt';
   var tmp = ""
   var links = [];
   var emailB = "";
   str = str.replace(/\s+/g, '%20');
   //
-    for (i = 0; i < 50; i++) {
+    for (i = 0; i < 100; i++) {
       request({   
         uri: "http://search.free.fr/google.pl?page="+i+"&qs="+str,
       }, function(error, response, body) {
@@ -56,6 +60,8 @@ function free (str) {
             if (email !== emailB && match == null){
               //console.log(email);
               fs.appendFileSync(file, email+'\n', "UTF-8",{'flags': 'a+'});
+              neek.unique(readable, writable, function(){
+              });
               emailB = email;
             }
           });
