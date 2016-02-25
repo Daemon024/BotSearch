@@ -1,9 +1,7 @@
 var google = require('google');
 // var wait = require('wait.for');
-var request = require("request");
-var cheerio = require("cheerio");
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
+var request = require('request');
+var cheerio = require('cheerio');
 // var hma = require('hma-proxy-scraper');
 var extractor = require('email-extractor').Extractor;
 var fs = require('fs');
@@ -11,41 +9,16 @@ var fs = require('fs');
 google.resultsPerPage = 100
 var nextCounter = 0
 var emailBis = "";
-// var url = 'mongodb://localhost:27017/mail';
-
-// //connect away
-// MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
-//   if (err) throw err;
-//   console.log("Connected to Database");
-
-//   //simple json record
-//   var document = {name:"David", title:"About MongoDB"};
-  
-//   //insert record
-//   db.collection('test').insert(document, function(err, records) {
-//     if (err) throw err;
-//     console.log("Record added as "+records[0]._id);
-//   });
-// });
-
-//////////////////
-// Proxies for google /////////////////////////////////
-// var proxieslist = {};
-// var proxies = hma.getProxies(function (err,proxies) {
-//     if(err)
-//         throw err
-// });
-// console.log(proxies);
-///////////////////////////////////////////////////////
-// orange();
-
+var key = process.argv[2];
+//
+free(key);
 function free (str) {
   console.log("Keyword in use: ", str);
   console.log("-----------");
   file = str.replace(/\s+/g, '');
   console.log("File for save: ", file);
   console.log("-----------");
-  fs.writeFile(file+'.txt', '');
+  file = file + '.txt';
   //
   var tmp = ""
   var links = [];
@@ -67,25 +40,8 @@ function free (str) {
           extractor(links[i], function (url, email){
           var match = email.match(/(gif|png|jpg|jpeg)$/);
             if (email !== emailB && match == null){
-              console.log(email);
-            var insertDocument = function(db, callback) {
-               db.collection('mail').insertOne( {
-                  "mail" : {
-                     "mail" : email,
-                     "url" : url,
-                  },
-               }, function(err, result) {
-                assert.equal(err, null);
-                console.log("Inserted a document into the local collection.");
-                callback();
-              });
-            };
-              // fs.appendFile(file+'.txt', email + "\n", function (err) {
-              //    if(err) {
-              //       return console.log(err);
-              //      }
-              //     console.log("The file was saved!");
-              // }); 
+              //console.log(email);
+              fs.appendFileSync(file, email+'\n', "UTF-8",{'flags': 'a+'});
               emailB = email;
             }
           });
@@ -94,7 +50,7 @@ function free (str) {
     }
 }
 
-free('Developpement web agency website contact');
+//free('Developpement web agency website contact');
 
 /////////////////////////////////////////////////////////
 
@@ -122,19 +78,19 @@ free('Developpement web agency website contact');
 //  }
 // })
 // (err) console.error(err)
-// 	for (var i = 0; i < links.length; ++i) {
-// 		console.log("link: ", links[i].link);
-// 	  	extractor(links[i].link,function(url, email){
-// 	  		var match = email.match(/(gif|png|jpg|jpeg)$/);
-// 	  		if (email !== emailBis && match == null) {
-// 			  	fs.appendFile(str+'.txt', email + "\n", function (err) {
-// 				});
-// 				emailBis = email;
-// 			}
-// 		});
-// 	}
-// 	if (nextCounter < 5) {
+//  for (var i = 0; i < links.length; ++i) {
+//    console.log("link: ", links[i].link);
+//      extractor(links[i].link,function(url, email){
+//        var match = email.match(/(gif|png|jpg|jpeg)$/);
+//        if (email !== emailBis && match == null) {
+//          fs.appendFile(str+'.txt', email + "\n", function (err) {
+//        });
+//        emailBis = email;
+//      }
+//    });
+//  }
+//  if (nextCounter < 5) {
 //     nextCounter += 1
-// 		if (next) next()
-// 	}
+//    if (next) next()
+//  }
 // })

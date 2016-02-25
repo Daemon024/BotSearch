@@ -11,6 +11,7 @@
   "dependencies": {
     "cheerio": "^0.20.0",
     "email-extractor": "^0.2.9",
+    "file-save": "^0.2.0",
     "google": "^1.4.0",
     "hma-proxy-scraper": "0.0.4"
   }
