@@ -6,23 +6,12 @@ var cheerio = require('cheerio');
 // var hma = require('hma-proxy-scraper');
 var extractor = require('email-extractor').Extractor;
 var fs = require('fs');
+var argv = require('minimist')(process.argv.slice(1));
 // Google Params //
 google.resultsPerPage = 100
 var nextCounter = 0
 var emailBis = "";
-var str = process.argv[2];
-var str2 = process.argv[3]
-var str3 = process.argv[4]
-var str4 = process.argv[5]
-if (str2 != null & str3 == null & str4 == null) {
-  str = str+str2;
-};
-if (str2 != null & str3 != null & str4 == null ) {
-  str = str+str2+str3;
-};
-if (str2 != null & str3 != null & str4 != null ) {
-  str = str+str2+str3+str4;
-};
+var str = argv.k;
 //
 str = str.replace(/\s+/g, '%20');
 console.log(str);
@@ -60,8 +49,6 @@ function free (str) {
             if (email !== emailB && match == null){
               //console.log(email);
               fs.appendFileSync(file, email+'\n', "UTF-8",{'flags': 'a+'});
-              neek.unique(readable, writable, function(){
-              });
               emailB = email;
             }
           });
